@@ -3,17 +3,17 @@ using System.Configuration;
 
 namespace CacheCSharp
 {
-    public abstract class CacheProvider<TCache> : ICacheProvider
+    public abstract class CacheProviderBase<TCache> : ICache
     {
         public int CacheDuration { get; set; }
 
-        protected TCache Cache;
+        protected readonly TCache Cache;
 
         private const int DefaultCacheDurationMinuts = 30;
 
         protected readonly string KeyPrefix;
 
-        public CacheProvider()
+        public CacheProviderBase()
         {
             int result;
             CacheDuration = int.TryParse(ConfigurationManager.AppSettings["CacheDefaultDurationMinutes"], out result) ? result : DefaultCacheDurationMinuts;

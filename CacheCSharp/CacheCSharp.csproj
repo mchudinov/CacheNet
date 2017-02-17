@@ -68,11 +68,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CacheManagerCache.cs" />
-    <Compile Include="CacheProvider.cs" />
+    <Compile Include="CacheManagerProvider.cs" />
+    <Compile Include="CacheProviderBase.cs" />
     <Compile Include="CacheProviderExtensions.cs" />
-    <Compile Include="HttpCache.cs" />
-    <Compile Include="ICacheProvider.cs" />
+    <Compile Include="MemoryProvider.cs" />
+    <Compile Include="SystemWebProvider.cs" />
+    <Compile Include="ICache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

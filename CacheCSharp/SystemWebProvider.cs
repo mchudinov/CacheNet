@@ -3,7 +3,7 @@ using System.Web;
 
 namespace CacheCSharp
 {
-    public class HttpCache : CacheProvider<System.Web.Caching.Cache>
+    public class SystemWebProvider : CacheProviderBase<System.Web.Caching.Cache>
     {
         protected override System.Web.Caching.Cache InitCache()
         {

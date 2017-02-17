@@ -3,7 +3,7 @@ using CacheManager.Core;
 
 namespace CacheCSharp
 {
-    public class CacheManagerCache : CacheProvider<ICacheManager<object>>
+    public class CacheManagerProvider : CacheProviderBase<ICacheManager<object>>
     {    
         protected override ICacheManager<object> InitCache()
         {
