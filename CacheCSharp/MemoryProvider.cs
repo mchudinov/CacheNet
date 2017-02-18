@@ -12,32 +12,48 @@ namespace CacheCSharp
 
         public override T Get<T>(string key)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (Cache[KeyPrefix + key] == null)
+                {
+                    return default(T);
+                }
+
+                return (T)Cache[KeyPrefix + key];
+            }
+            catch
+            {
+                return default(T);
+            }
         }
 
         public override void Set<T>(string key, T value)
         {
-            throw new NotImplementedException();
+            var policy = new CacheItemPolicy();
+            Cache.Set(key, value, policy);
         }
 
         public override void SetSliding<T>(string key, T value)
         {
-            throw new NotImplementedException();
+            SetSliding<T>(KeyPrefix + key, value, CacheDuration);
         }
 
         public override void Set<T>(string key, T value, int duration)
         {
-            throw new NotImplementedException();
+            var policy = new CacheItemPolicy {AbsoluteExpiration = DateTime.Now.AddMinutes(duration)};
+            Cache.Set(key, value, policy);
         }
 
         public override void SetSliding<T>(string key, T value, int duration)
         {
-            throw new NotImplementedException();
+            var policy = new CacheItemPolicy { SlidingExpiration = new TimeSpan(0, duration, 0) };
+            Cache.Set(key, value, policy);
         }
 
         public override void Set<T>(string key, T value, DateTimeOffset expiration)
         {
-            throw new NotImplementedException();
+            var policy = new CacheItemPolicy { AbsoluteExpiration = expiration.DateTime };
+            Cache.Set(key, value, policy);
         }
 
         public override bool Exists(string key)
