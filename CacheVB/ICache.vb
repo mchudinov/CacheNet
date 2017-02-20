@@ -1,5 +1,4 @@
-﻿
-Public Interface ICache
+﻿Public Interface ICache
     ''' <summary>
     ''' Retrieve cached item
     ''' </summary>

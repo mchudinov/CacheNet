@@ -1,6 +1,5 @@
 ﻿Imports System.Web
 
-
 Public NotInheritable Class SystemWebProvider
     Inherits CacheProviderBase(Of System.Web.Caching.Cache)
 
@@ -40,19 +39,34 @@ Public NotInheritable Class SystemWebProvider
     End Sub
 
     Public Overrides Sub SetSliding(Of T)(key As String, value As T, duration As Integer)
-        Cache.Insert(KeyPrefix & key, value, Nothing, DateTime.Now.AddMinutes(duration), System.Web.Caching.Cache.NoSlidingExpiration)
+        Cache.Insert(
+            KeyPrefix & key, 
+            value, 
+            Nothing, 
+            DateTime.Now.AddMinutes(duration), 
+            System.Web.Caching.Cache.NoSlidingExpiration)
     End Sub
 
     Public Overrides Sub SetValue (Of T)(key As String, value As T, expiration As DateTimeOffset)
-        Throw New NotImplementedException
+        Cache.Insert(
+            KeyPrefix & key, 
+            value, 
+            Nothing, 
+            expiration.DateTime, 
+            System.Web.Caching.Cache.NoSlidingExpiration)
     End Sub
 
     Public Overrides Function Exists(key As String) As Boolean
-        Throw New NotImplementedException
+        Return Cache(key) IsNot Nothing
     End Function
 
     Public Overrides Sub SetValue(Of T)(key As String, value As T, duration As Integer)
-        Cache.Insert(KeyPrefix & key, value, Nothing, System.Web.Caching.Cache.NoAbsoluteExpiration, New TimeSpan(0, duration, 0))
+        Cache.Insert(
+            KeyPrefix & key, 
+            value, 
+            Nothing, 
+            System.Web.Caching.Cache.NoAbsoluteExpiration, 
+            New TimeSpan(0, duration, 0))
     End Sub
 
     Public Overrides Sub Remove(key As String)

@@ -1,6 +1,5 @@
 ﻿Imports System.Configuration
 
-
 Public MustInherit Class CacheProviderBase(Of TCache)
     Implements ICache
 
