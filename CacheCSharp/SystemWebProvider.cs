@@ -14,7 +14,7 @@ namespace CacheCSharp
         {
             try
             {
-                if (Cache[KeyPrefix+key] == null)
+                if (!Exists(key))
                 {
                     return default(T);
                 }
@@ -27,14 +27,14 @@ namespace CacheCSharp
             }
         }
 
-        public override void Set<T>(string key, T value)
+        public override void Set<T>(string key, T value, int duration)
         {
-            Set<T>(KeyPrefix+key, value, CacheDuration);
-        }
-
-        public override void SetSliding<T>(string key, T value)
-        {
-            SetSliding<T>(KeyPrefix+key, value, CacheDuration);
+            Cache.Insert(
+                KeyPrefix + key,
+                value,
+                null,
+                System.Web.Caching.Cache.NoAbsoluteExpiration,
+                new TimeSpan(0, duration, 0));
         }
 
         public override void SetSliding<T>(string key, T value, int duration)
@@ -59,17 +59,7 @@ namespace CacheCSharp
 
         public override bool Exists(string key)
         {
-            return Cache[key] != null;
-        }
-
-        public override void Set<T>(string key, T value, int duration)
-        {
-            Cache.Insert(
-                KeyPrefix+key,
-                value,
-                null,
-                System.Web.Caching.Cache.NoAbsoluteExpiration,
-                new TimeSpan(0, duration, 0));
+            return Cache[KeyPrefix + key] != null;
         }
 
         public override void Remove(string key)

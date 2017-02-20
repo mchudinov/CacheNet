@@ -3,7 +3,7 @@ using System.Runtime.Caching;
 
 namespace CacheCSharp
 {
-    public class MemoryProvider : CacheProviderBase<System.Runtime.Caching.MemoryCache>
+    public class MemoryProvider : CacheProviderBase<MemoryCache>
     {
         protected override MemoryCache InitCache()
         {
@@ -14,7 +14,7 @@ namespace CacheCSharp
         {
             try
             {
-                if (Cache[KeyPrefix + key] == null)
+                if (!Exists(key))
                 {
                     return default(T);
                 }
@@ -27,38 +27,28 @@ namespace CacheCSharp
             }
         }
 
-        public override void Set<T>(string key, T value)
-        {
-            var policy = new CacheItemPolicy();
-            Cache.Set(key, value, policy);
-        }
-
-        public override void SetSliding<T>(string key, T value)
-        {
-            SetSliding<T>(KeyPrefix + key, value, CacheDuration);
-        }
 
         public override void Set<T>(string key, T value, int duration)
         {
             var policy = new CacheItemPolicy {AbsoluteExpiration = DateTime.Now.AddMinutes(duration)};
-            Cache.Set(key, value, policy);
+            Cache.Set(KeyPrefix + key, value, policy);
         }
 
         public override void SetSliding<T>(string key, T value, int duration)
         {
             var policy = new CacheItemPolicy { SlidingExpiration = new TimeSpan(0, duration, 0) };
-            Cache.Set(key, value, policy);
+            Cache.Set(KeyPrefix + key, value, policy);
         }
 
         public override void Set<T>(string key, T value, DateTimeOffset expiration)
         {
             var policy = new CacheItemPolicy { AbsoluteExpiration = expiration.DateTime };
-            Cache.Set(key, value, policy);
+            Cache.Set(KeyPrefix + key, value, policy);
         }
 
         public override bool Exists(string key)
         {
-            return Cache[key] != null;
+            return Cache[KeyPrefix + key] != null;
         }
 
         public override void Remove(string key)

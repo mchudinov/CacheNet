@@ -8,7 +8,7 @@ Public Class MemoryProvider
 
     Public Overrides Function [Get](Of T)(key As String) As T
         Try
-            If Cache(KeyPrefix & key) Is Nothing Then
+            If Not Exists(key) Then
                 Return Nothing
             End If
 
@@ -18,35 +18,26 @@ Public Class MemoryProvider
         End Try
     End Function
 
-    Public Overrides Sub [Set](Of T)(key As String, value As T)
-        Dim policy = New CacheItemPolicy()
-        Cache.[Set](key, value, policy)
-    End Sub
-
-    Public Overrides Sub SetSliding(Of T)(key As String, value As T)
-        SetSliding(Of T)(KeyPrefix & key, value, CacheDuration)
-    End Sub
-
     Public Overrides Sub [Set](Of T)(key As String, value As T, duration As Integer)
         Dim policy = New CacheItemPolicy()
         policy.AbsoluteExpiration = DateTime.Now.AddMinutes(duration)
-        Cache.[Set](key, value, policy)
+        Cache.[Set](KeyPrefix & key, value, policy)
     End Sub
 
     Public Overrides Sub SetSliding(Of T)(key As String, value As T, duration As Integer)
         Dim policy = New CacheItemPolicy()
         policy.SlidingExpiration = New TimeSpan(0, duration, 0)
-        Cache.[Set](key, value, policy)
+        Cache.[Set](KeyPrefix & key, value, policy)
     End Sub
 
     Public Overrides Sub [Set](Of T)(key As String, value As T, expiration As DateTimeOffset)
         Dim policy = New CacheItemPolicy()
         policy.AbsoluteExpiration = expiration.DateTime
-        Cache.[Set](key, value, policy)
+        Cache.[Set](KeyPrefix & key, value, policy)
     End Sub
 
     Public Overrides Function Exists(key As String) As Boolean
-        Return Cache(key) IsNot Nothing
+        Return Cache(KeyPrefix & key) IsNot Nothing
     End Function
 
     Public Overrides Sub Remove(key As String)

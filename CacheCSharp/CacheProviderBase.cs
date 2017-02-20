@@ -25,9 +25,15 @@ namespace CacheCSharp
 
         public abstract T Get<T>(string key);
 
-        public abstract void Set<T>(string key, T value);
+        public virtual void Set<T>(string key, T value)
+        {
+            Set<T>(key, value, CacheDuration);
+        }
 
-        public abstract void SetSliding<T>(string key, T value);
+        public virtual void SetSliding<T>(string key, T value)
+        {
+            SetSliding<T>(key, value, CacheDuration);
+        }
 
         public abstract void Set<T>(string key, T value, int duration);
 

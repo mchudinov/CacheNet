@@ -8,7 +8,7 @@ Public Class SystemWebProvider
 
     Public Overrides Function [Get](Of T)(key As String) As T
         Try
-            If Cache(KeyPrefix & key) Is Nothing Then
+            If Not Exists(key) Then
                 Return Nothing
             End If
 
@@ -17,14 +17,6 @@ Public Class SystemWebProvider
             Return Nothing
         End Try
     End Function
-
-    Public Overrides Sub [Set](Of T)(key As String, value As T)
-        [Set](Of T)(KeyPrefix & key, value, CacheDuration)
-    End Sub
-
-    Public Overrides Sub SetSliding(Of T)(key As String, value As T)
-        SetSliding(Of T)(KeyPrefix & key, value, CacheDuration)
-    End Sub
 
     Public Overrides Sub SetSliding(Of T)(key As String, value As T, duration As Integer)
         Cache.Insert(KeyPrefix & key, value, Nothing, DateTime.Now.AddMinutes(duration), System.Web.Caching.Cache.NoSlidingExpiration)
@@ -35,7 +27,7 @@ Public Class SystemWebProvider
     End Sub
 
     Public Overrides Function Exists(key As String) As Boolean
-        Return Cache(key) IsNot Nothing
+        Return Cache(KeyPrefix & key) IsNot Nothing
     End Function
 
     Public Overrides Sub [Set](Of T)(key As String, value As T, duration As Integer)

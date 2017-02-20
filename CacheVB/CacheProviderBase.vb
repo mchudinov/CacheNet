@@ -22,9 +22,13 @@ Public MustInherit Class CacheProviderBase(Of TCache)
 
     Public MustOverride Function [Get](Of T)(key As String) As T Implements ICache.[Get]
 
-    Public MustOverride Sub [Set](Of T)(key As String, value As T) Implements ICache.[Set]
+    Public Overridable Sub [Set](Of T)(key As String, value As T) Implements ICache.[Set]
+        [Set](Of T)(key, value, CacheDuration)
+    End Sub
 
-    Public MustOverride Sub SetSliding(Of T)(key As String, value As T) Implements ICache.SetSliding
+    Public Overridable Sub SetSliding(Of T)(key As String, value As T) Implements ICache.SetSliding
+        SetSliding(Of T)(key, value, CacheDuration)
+    End Sub
 
     Public MustOverride Sub [Set](Of T)(key As String, value As T, duration As Integer) Implements ICache.[Set]
 

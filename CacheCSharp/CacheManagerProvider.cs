@@ -15,18 +15,6 @@ namespace CacheCSharp
             return Cache.Get<T>(KeyPrefix+key);
         }
 
-        public override void Set<T>(string key, T value) 
-        {
-            Cache.Add(KeyPrefix+key, value);
-            Cache.Expire(KeyPrefix+key, DateTime.Now.AddMinutes(CacheDuration));
-        }
-
-        public override void SetSliding<T>(string key, T value)
-        {
-            Cache.Add(KeyPrefix+key, value);
-            Cache.Expire(KeyPrefix+key, new TimeSpan(0, CacheDuration, 0));
-        }
-
         public override void Set<T>(string key, T value, int duration)
         {
             Cache.Add(KeyPrefix+key, value);
@@ -47,7 +35,7 @@ namespace CacheCSharp
 
         public override bool Exists(string key)
         {
-            return Cache.Exists(key);
+            return Cache.Exists(KeyPrefix + key);
         }
 
         public override void Remove(string key)
