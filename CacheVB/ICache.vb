@@ -5,7 +5,7 @@
     ''' <typeparam name="T">Type of cached item</typeparam>
     ''' <param name="key">Name of cached item</param>
     ''' <returns>Cached value. Default(T) if item doesn't exist.</returns>
-    Function GetValue(Of T)(key As String) As T
+    Function [Get](Of T)(key As String) As T
 
     ''' <summary>
     ''' Insert value into the cache using appropriate name/value pairs
@@ -14,7 +14,7 @@
     ''' <typeparam name="T">Type of cached item</typeparam>
     ''' <param name="value">Item to be cached</param>
     ''' <param name="key">Name of item</param>
-    Sub SetValue(Of T)(key As String, value As T)
+    Sub [Set](Of T)(key As String, value As T)
 
     ''' <summary>
     ''' Insert value into the cache using appropriate name/value pairs
@@ -33,7 +33,7 @@
     ''' <param name="key">Item to be cached</param>
     ''' <param name="value">Name of item</param>
     ''' <param name="duration">Cache duration in minutes with absolute expiration</param>
-    Sub SetValue(Of T)(key As String, value As T, duration As Integer)
+    Sub [Set](Of T)(key As String, value As T, duration As Integer)
 
     ''' <summary>
     ''' Insert value into the cache using
@@ -53,7 +53,7 @@
     ''' <param name="key">Item to be cached</param>
     ''' <param name="value">Name of item</param>
     ''' <param name="expiration">Cache expiration time with absolute expiration</param>
-    Sub SetValue(Of T)(key As String, value As T, expiration As DateTimeOffset)
+    Sub [Set](Of T)(key As String, value As T, expiration As DateTimeOffset)
     
     ''' <summary>
     ''' Returns a value indicating if the key exists in at least one cache layer configured in CacheManger, 

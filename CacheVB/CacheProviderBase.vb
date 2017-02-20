@@ -20,17 +20,17 @@ Public MustInherit Class CacheProviderBase(Of TCache)
 
     Protected MustOverride Function InitCache() As TCache
 
-    Public MustOverride Function GetValue(Of T)(key As String) As T Implements ICache.GetValue
+    Public MustOverride Function [Get](Of T)(key As String) As T Implements ICache.[Get]
 
-    Public MustOverride Sub SetValue(Of T)(key As String, value As T) Implements ICache.SetValue
+    Public MustOverride Sub [Set](Of T)(key As String, value As T) Implements ICache.[Set]
 
     Public MustOverride Sub SetSliding(Of T)(key As String, value As T) Implements ICache.SetSliding
 
-    Public MustOverride Sub SetValue(Of T)(key As String, value As T, duration As Integer) Implements ICache.SetValue
+    Public MustOverride Sub [Set](Of T)(key As String, value As T, duration As Integer) Implements ICache.[Set]
 
     Public MustOverride Sub SetSliding(Of T)(key As String, value As T, duration As Integer) Implements ICache.SetSliding
 
-    Public MustOverride Sub SetValue (Of T)(key As String, value As T, expiration As DateTimeOffset) Implements ICache.SetValue
+    Public MustOverride Sub [Set] (Of T)(key As String, value As T, expiration As DateTimeOffset) Implements ICache.[Set]
 
     Public MustOverride Function Exists(key As String) As Boolean Implements ICache.Exists
 

@@ -1,9 +1,9 @@
-﻿Imports System.Web
+﻿Imports System.Runtime.Caching
 
-Public Class SystemWebProvider
-    Inherits CacheProviderBase(Of System.Web.Caching.Cache)
-    Protected Overrides Function InitCache() As System.Web.Caching.Cache
-        Return HttpRuntime.Cache
+Public Class MemoryProvider
+    Inherits CacheProviderBase(Of System.Runtime.Caching.MemoryCache)
+    Protected Overrides Function InitCache() As MemoryCache
+        Return MemoryCache.[Default]
     End Function
 
     Public Overrides Function [Get](Of T)(key As String) As T
@@ -19,28 +19,35 @@ Public Class SystemWebProvider
     End Function
 
     Public Overrides Sub [Set](Of T)(key As String, value As T)
-        [Set](Of T)(KeyPrefix & key, value, CacheDuration)
+        Dim policy = New CacheItemPolicy()
+        Cache.[Set](key, value, policy)
     End Sub
 
     Public Overrides Sub SetSliding(Of T)(key As String, value As T)
         SetSliding(Of T)(KeyPrefix & key, value, CacheDuration)
     End Sub
 
+    Public Overrides Sub [Set](Of T)(key As String, value As T, duration As Integer)
+        Dim policy = New CacheItemPolicy()
+        policy.AbsoluteExpiration = DateTime.Now.AddMinutes(duration)
+        Cache.[Set](key, value, policy)
+    End Sub
+
     Public Overrides Sub SetSliding(Of T)(key As String, value As T, duration As Integer)
-        Cache.Insert(KeyPrefix & key, value, Nothing, DateTime.Now.AddMinutes(duration), System.Web.Caching.Cache.NoSlidingExpiration)
+        Dim policy = New CacheItemPolicy()
+        policy.SlidingExpiration = New TimeSpan(0, duration, 0)
+        Cache.[Set](key, value, policy)
     End Sub
 
     Public Overrides Sub [Set](Of T)(key As String, value As T, expiration As DateTimeOffset)
-        Cache.Insert(KeyPrefix & key, value, Nothing, expiration.DateTime, System.Web.Caching.Cache.NoSlidingExpiration)
+        Dim policy = New CacheItemPolicy()
+        policy.AbsoluteExpiration = expiration.DateTime
+        Cache.[Set](key, value, policy)
     End Sub
 
     Public Overrides Function Exists(key As String) As Boolean
         Return Cache(key) IsNot Nothing
     End Function
-
-    Public Overrides Sub [Set](Of T)(key As String, value As T, duration As Integer)
-        Cache.Insert(KeyPrefix & key, value, Nothing, System.Web.Caching.Cache.NoAbsoluteExpiration, New TimeSpan(0, duration, 0))
-    End Sub
 
     Public Overrides Sub Remove(key As String)
         Cache.Remove(KeyPrefix & key)

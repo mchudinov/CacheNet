@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="CacheManagerProvider.vb" />
     <Compile Include="CacheProviderBase.vb" />
+    <Compile Include="MemoryProvider.vb" />
     <Compile Include="SystemWebProvider.vb" />
     <Compile Include="ICache.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
