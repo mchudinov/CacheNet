@@ -3,7 +3,7 @@ using System.Runtime.Caching;
 
 namespace CacheCSharp
 {
-    class MemoryProvider : CacheProviderBase<System.Runtime.Caching.MemoryCache>
+    public class MemoryProvider : CacheProviderBase<System.Runtime.Caching.MemoryCache>
     {
         protected override MemoryCache InitCache()
         {

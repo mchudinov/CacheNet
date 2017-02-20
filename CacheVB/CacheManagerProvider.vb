@@ -3,7 +3,7 @@
 Public Class CacheManagerProvider
     Inherits CacheProviderBase(Of ICacheManager(Of Object))
     Protected Overrides Function InitCache() As ICacheManager(Of Object)
-        Return CacheFactory.FromConfiguration(Of Object)("Redis")
+        Return CacheFactory.FromConfiguration(Of Object)("cache")
     End Function
 
     Public Overrides Function GetValue(Of T)(key As String) As T
