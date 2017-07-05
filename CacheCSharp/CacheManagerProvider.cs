@@ -17,22 +17,19 @@ namespace CacheCSharp
 
         public override void Set<T>(string key, T value, int duration)
         {
-            Cache.Remove(KeyPrefix + key);
-            Cache.Add(KeyPrefix+key, value);
+            Cache.Put(KeyPrefix+key, value);
             Cache.Expire(KeyPrefix+key, DateTime.Now.AddMinutes(duration));
         }
 
         public override void SetSliding<T>(string key, T value, int duration)
         {
-            Cache.Remove(KeyPrefix + key);
-            Cache.Add(KeyPrefix+key, value);
+            Cache.Put(KeyPrefix+key, value);
             Cache.Expire(KeyPrefix+key, new TimeSpan(0, duration, 0));
         }
 
         public override void Set<T>(string key, T value, DateTimeOffset expiration)
         {
-            Cache.Remove(KeyPrefix + key);
-            Cache.Add(KeyPrefix + key, value);
+            Cache.Put(KeyPrefix + key, value);
             Cache.Expire(KeyPrefix + key, expiration);
         }
 
