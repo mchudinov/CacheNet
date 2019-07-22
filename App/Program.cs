@@ -53,6 +53,7 @@ namespace App
             Task.WaitAll(asyncResult); // block while the task completes
             Console.WriteLine(asyncResult.Result);
 
+            Console.WriteLine("Done. Press ENTER.");
             Console.ReadLine();
         }
 

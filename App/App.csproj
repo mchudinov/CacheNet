@@ -33,13 +33,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CacheManager.Core, Version=0.9.3.0, Culture=neutral, PublicKeyToken=5b450b4fb65c4cdb, processorArchitecture=MSIL">
-      <HintPath>..\packages\CacheManager.Core.0.9.3\lib\net45\CacheManager.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="CacheManager.Core, Version=1.2.0.0, Culture=neutral, PublicKeyToken=5b450b4fb65c4cdb, processorArchitecture=MSIL">
+      <HintPath>..\packages\CacheManager.Core.1.2.0\lib\net45\CacheManager.Core.dll</HintPath>
     </Reference>
-    <Reference Include="CacheManager.SystemRuntimeCaching, Version=0.9.3.0, Culture=neutral, PublicKeyToken=5b450b4fb65c4cdb, processorArchitecture=MSIL">
-      <HintPath>..\packages\CacheManager.SystemRuntimeCaching.0.9.3\lib\net45\CacheManager.SystemRuntimeCaching.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="CacheManager.SystemRuntimeCaching, Version=1.2.0.0, Culture=neutral, PublicKeyToken=5b450b4fb65c4cdb, processorArchitecture=MSIL">
+      <HintPath>..\packages\CacheManager.SystemRuntimeCaching.1.2.0\lib\net45\CacheManager.SystemRuntimeCaching.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
